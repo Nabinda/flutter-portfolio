@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class OnHover extends StatefulWidget {
-
   final Widget Function(bool isHovered) builder;
 
   const OnHover({Key? key, required this.builder}) : super(key: key);
@@ -29,7 +28,6 @@ class _OnHoverState extends State<OnHover> {
         ),
       );
     }else{
-      print("mobile");
      return AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         transform: transform,

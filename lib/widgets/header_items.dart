@@ -4,13 +4,15 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 class HeaderItems extends StatelessWidget {
   final String title;
-  const HeaderItems({Key? key, required this.title})
+  final bool isSelected;
+  const HeaderItems({Key? key, required this.title,required this.isSelected})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (kIsWeb) {
-      return OnHover(builder: (isHover) {
+      return OnHover(
+          builder: (isHover) {
         final color = isHover ? Colors.red : Colors.black;
         return Transform(
           transform: Matrix4.skewX(-0.5),
@@ -26,8 +28,8 @@ class HeaderItems extends StatelessWidget {
               fit: BoxFit.scaleDown,
               child: Text(
                 title,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: isHover?Colors.white:isSelected?Colors.green:Colors.white,
                   fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                 ),

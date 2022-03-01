@@ -8,7 +8,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
 
 class MainHome extends StatefulWidget {
-  const MainHome({Key? key}) : super(key: key);
+  final VoidCallback func;
+  final int currentIndex;
+  const MainHome({Key? key, required this.func, required this.currentIndex})
+      : super(key: key);
 
   @override
   State<MainHome> createState() => _MainHomeState();
@@ -70,106 +73,100 @@ class _MainHomeState extends State<MainHome> {
     }
   }
 
-  processCV() async{
-    print("I am here");
-    if(kIsWeb){
-
-    }else{
-      result =await Provider.of<CVProvider>(context,listen: false).downloadCV();
+  processCV() async {
+    if (kIsWeb) {
+    } else {
+      result =
+          await Provider.of<CVProvider>(context, listen: false).downloadCV();
       print(result);
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Container(
-          width: width,
-          height: height,
-          padding: Responsive.isLargeScreen(context)
-              ? const EdgeInsets.symmetric(horizontal: 100, vertical: 30)
-              : Responsive.isMediumScreen(context)
-                  ? const EdgeInsets.symmetric(horizontal: 70, vertical: 30)
-                  : const EdgeInsets.all(30),
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  repeat: ImageRepeat.noRepeat,
-                  alignment: Alignment.topRight,
-                  fit: BoxFit.contain,
-                  image: AssetImage("assets/images/profile.png"))),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ///If both name and button to bounce remove
-              ///Sized box and insert mainAxisAlignment in Column
-              SizedBox(
-                height: height * 0.17,
-              ),
-              AnimatedTextKit(
-                repeatForever: true,
-                isRepeatingAnimation: true,
-                pause: const Duration(milliseconds: 50),
-                animatedTexts: [
-                  Responsive.isLargeScreen(context)
+    return Container(
+      width: width,
+      height: height,
+      padding: Responsive.isLargeScreen(context)
+          ? const EdgeInsets.symmetric(horizontal: 100, vertical: 30)
+          : Responsive.isMediumScreen(context)
+              ? const EdgeInsets.symmetric(horizontal: 70, vertical: 30)
+              : const EdgeInsets.all(30),
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              repeat: ImageRepeat.noRepeat,
+              alignment: Alignment.topRight,
+              fit: BoxFit.contain,
+              image: AssetImage("assets/images/profile.png"))),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ///If both name and button to bounce remove
+          ///Sized box and insert mainAxisAlignment in Column
+          SizedBox(
+            height: height * 0.25,
+          ),
+          AnimatedTextKit(
+            repeatForever: true,
+            isRepeatingAnimation: true,
+            pause: const Duration(milliseconds: 50),
+            animatedTexts: [
+              Responsive.isLargeScreen(context)
+                  ? ColorizeAnimatedText(
+                      _headerText,
+                      colors: colorizeColors,
+                      textStyle: const TextStyle(
+                          fontSize: 72,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic),
+                      speed: const Duration(milliseconds: 300),
+                    )
+                  : Responsive.isMediumScreen(context)
                       ? ColorizeAnimatedText(
                           _headerText,
                           colors: colorizeColors,
                           textStyle: const TextStyle(
-                              fontSize: 72,
+                              fontSize: 52,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.italic),
                           speed: const Duration(milliseconds: 300),
                         )
-                      : Responsive.isMediumScreen(context)
-                          ? ColorizeAnimatedText(
-                              _headerText,
-                              colors: colorizeColors,
-                              textStyle: const TextStyle(
-                                  fontSize: 52,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic),
-                              speed: const Duration(milliseconds: 300),
-                            )
-                          : ColorizeAnimatedText(
-                              _headerText,
-                              colors: colorizeColors,
-                              textStyle: const TextStyle(
-                                  fontSize: 36,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic),
-                              speed: const Duration(milliseconds: 300),
-                            ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              AnimatedTextKit(
-                  isRepeatingAnimation: true,
-                  repeatForever: true,
-                  onNext: (index, bool bool) {
-                    if (bool) {
-                      changeQuotes();
-                    }
-                  },
-                  totalRepeatCount: 0,
-                  animatedTexts: [
-                    TypewriterAnimatedText(displayQuote,
-                        speed: const Duration(milliseconds: 120),
-                        textStyle: const TextStyle(color: Colors.white))
-                  ]),
-              button(context)
+                      : ColorizeAnimatedText(
+                          _headerText,
+                          colors: colorizeColors,
+                          textStyle: const TextStyle(
+                              fontSize: 36,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.italic),
+                          speed: const Duration(milliseconds: 300),
+                        ),
             ],
           ),
-        ),
-      ],
+          const SizedBox(
+            height: 10,
+          ),
+          AnimatedTextKit(
+              isRepeatingAnimation: true,
+              repeatForever: true,
+              onNext: (index, bool bool) {
+                if (bool) {
+                  changeQuotes();
+                }
+              },
+              totalRepeatCount: 0,
+              animatedTexts: [
+                TypewriterAnimatedText(displayQuote,
+                    speed: const Duration(milliseconds: 120),
+                    textStyle: const TextStyle(color: Colors.white))
+              ]),
+          button(context)
+        ],
+      ),
     );
   }
 

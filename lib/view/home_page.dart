@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late bool _showBackToTopButton;
-
+  int activeIndex = 0;
   late ScrollController _scrollController;
 
   @override
@@ -50,7 +50,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _key,
-      endDrawer: Responsive.isSmallScreen(context) ? appDrawer(context) : null,
+      endDrawer:
+          Responsive.isSmallScreen(context) ? appDrawer(context, height) : null,
       body: Builder(builder: (context) {
         _scrollController = ScrollController()
           ..addListener(() {
@@ -62,42 +63,69 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               }
             });
           });
-        return SingleChildScrollView(
-            controller: _scrollController,
-            child: Column(
-              children: [
-                ///----Main Page------
-                Container(
-                  key: const Key("MainPage"),
-                  height: kIsWeb ? height : height * 0.8,
-                  width: width,
-                  color: Colors.black,
-                  child: Column(
-                    children: [
-                      SizedBox(height: height * 0.15, child: const Header()),
-                      SizedBox(
-                          height: kIsWeb ? height * 0.85 : height * 0.65,
-                          child: const MainHome()),
-                    ],
-                  ),
-                ),
+        return Stack(
+          children: [
+            SingleChildScrollView(
+                controller: _scrollController,
+                child: Column(
+                  children: [
+                    ///----Main Page------
+                    Container(
+                      key: const Key("MainPage"),
+                      height: kIsWeb ? height : height * 0.8,
+                      width: width,
+                      color: Colors.black,
+                      child: Column(
+                        children: [
+                          MainHome(
+                            currentIndex: activeIndex,
+                            func: () {
+                              setState(() {
+                                activeIndex = 0;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
 
-                ///-----About Section-----
-                const About(),
+                    ///-----About Section-----
+                    About(
+                      currentIndex: activeIndex,
+                      func: () {
+                        setState(() {
+                          activeIndex = 1;
+                        });
+                      },
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
 
-                ///-----Skills Section-----
-                const Skills(),
+                    ///-----Skills Section-----
+                    const Skills(),
 
-                ///-----Works Section-----
-                const Work(),
+                    ///-----Works Section-----
+                    const Work(),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
 
-                ///-----Contact Section-----
-                const Contact(),
+                    ///-----Contact Section-----
+                    const Contact(),
 
-                ///-----Footer Section-----
-                const Footer()
-              ],
-            ));
+                    ///-----Footer Section-----
+                    const Footer()
+                  ],
+                )),
+            Container(
+                color: Colors.black,
+                height: height * 0.1,
+                child: header(context, height)),
+          ],
+        );
       }),
       floatingActionButton: _showBackToTopButton == false
           ? null
@@ -112,9 +140,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget appDrawer(BuildContext context) {
+  Widget appDrawer(BuildContext context, double height) {
     final headerItems =
-    Provider.of<HeaderProvider>(context, listen: false).getHeaderItem();
+        Provider.of<HeaderProvider>(context, listen: false).getHeaderItem();
     return Drawer(
       backgroundColor: Colors.black,
       child: SafeArea(
@@ -127,12 +155,45 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           child: ListView.separated(
             itemBuilder: (BuildContext context, int index) {
               if (kIsWeb) {
-                return MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: HeaderItems(title: headerItems[index].title),
+                return GestureDetector(
+                  onTap: () {
+                    //TODO:: Location offset properly
+                    _scrollController.animateTo(
+                        ((height + 30) * headerItems[index].index),
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn);
+                    setState(() {
+                      activeIndex = headerItems[index].index;
+                    });
+                  },
+                  child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: HeaderItems(
+                      title: headerItems[index].title,
+                      isSelected: activeIndex == headerItems[index].index
+                          ? true
+                          : false,
+                    ),
+                  ),
                 );
               } else {
-                return HeaderItems(title: headerItems[index].title);
+                return GestureDetector(
+                    onTap: () {
+                      _scrollController.animateTo(
+                          ((height + 30) * headerItems[index].index),
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeIn);
+
+                      setState(() {
+                        activeIndex = headerItems[index].index;
+                      });
+                    },
+                    child: HeaderItems(
+                      title: headerItems[index].title,
+                      isSelected: activeIndex == headerItems[index].index
+                          ? true
+                          : false,
+                    ));
               }
             },
             separatorBuilder: (BuildContext context, int index) {
@@ -146,5 +207,81 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       ),
     );
   }
-}
 
+  Widget header(BuildContext context, double height) {
+    return Responsive(
+      largeScreen: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: buildHeader(context, height),
+      ),
+      smallScreen: buildMobileHeader(context),
+      mediumScreen: buildHeader(context, height),
+    );
+  }
+
+  // mobile header
+  Widget buildMobileHeader(BuildContext context) {
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const HeaderLogo(),
+            GestureDetector(
+              onTap: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+              child: const Icon(
+                Icons.menu,
+                color: Colors.white,
+                size: 28.0,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildHeader(BuildContext context, double height) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const HeaderLogo(),
+          menuItem(context, height),
+        ],
+      ),
+    );
+  }
+
+  Widget menuItem(BuildContext context, double height) {
+    final headerItems =
+        Provider.of<HeaderProvider>(context, listen: false).getHeaderItem();
+    return Row(
+      children: headerItems
+          .map((item) => GestureDetector(
+                onTap: () {
+                  _scrollController.animateTo(
+                      ((height - height * 0.11) * item.index),
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeIn);
+
+                  setState(() {
+                    activeIndex = item.index;
+                  });
+                },
+                child: MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: HeaderItems(
+                      title: item.title,
+                      isSelected:
+                          activeIndex == item.index ? true: false,
+                    )),
+              ))
+          .toList(),
+    );
+  }
+}

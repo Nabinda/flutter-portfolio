@@ -16,26 +16,18 @@ class Work extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 70),
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: Column(
-            children: [
-              header(),
-              const SizedBox(
-                height: 50,
-              ),
-              content(width),
-            ],
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 70),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      child: Column(
+        children: [
+          header(),
+          const SizedBox(
+            height: 50,
           ),
-        ),
-        Divider(
-          thickness: 1,
-          color: Colors.grey.withOpacity(0.5),
-        ),
-      ],
+          content(width),
+        ],
+      ),
     );
   }
 

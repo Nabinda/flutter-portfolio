@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import '/provider/authentication_provider.dart';
-import '/provider/header_provider.dart';
-import '/responsive.dart';
 import '/view/admin_panel.dart';
-import '/widgets/header_items.dart';
 import 'package:provider/provider.dart';
 
 class HeaderLogo extends StatefulWidget {
@@ -118,74 +115,3 @@ class _HeaderLogoState extends State<HeaderLogo> {
   }
 }
 
-class MenuItem extends StatelessWidget {
-  const MenuItem({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final headerItems =
-        Provider.of<HeaderProvider>(context, listen: false).getHeaderItem();
-    return Row(
-      children: headerItems
-          .map((item) => MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: HeaderItems(title: item.title)))
-          .toList(),
-    );
-  }
-}
-
-class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Responsive(
-      largeScreen: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: buildHeader(),
-      ),
-      // We will make this in a bit
-      smallScreen: buildMobileHeader(context),
-      mediumScreen: buildHeader(),
-    );
-  }
-
-  // mobile header
-  Widget buildMobileHeader(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const HeaderLogo(),
-            GestureDetector(
-              onTap: () {
-                Scaffold.of(context).openEndDrawer();
-              },
-              child: const Icon(
-                Icons.menu,
-                color: Colors.white,
-                size: 28.0,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildHeader() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          HeaderLogo(),
-          MenuItem(),
-        ],
-      ),
-    );
-  }
-}

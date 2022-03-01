@@ -3,22 +3,16 @@ import '/animation/fade_transition.dart';
 import '/responsive.dart';
 
 class About extends StatelessWidget {
-  const About({Key? key}) : super(key: key);
+  final VoidCallback func;
+  final int currentIndex;
+  const About({Key? key, required this.func, required this.currentIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Responsive(
-          smallScreen: smallScreen(),
-          mediumScreen: midAndAboveScreen(context),
-          largeScreen: midAndAboveScreen(context),
-        ),
-        Divider(
-          thickness: 1,
-          color: Colors.grey.withOpacity(0.5),
-        ),
-      ],
+    return Responsive(
+      smallScreen: smallScreen(),
+      mediumScreen: midAndAboveScreen(context),
+      largeScreen: midAndAboveScreen(context),
     );
   }
 
