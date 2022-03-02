@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '/animation/on_hover.dart';
 import '/provider/cv_provider.dart';
 import '/responsive.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
-import 'dart:js' as js;
 
 class MainHome extends StatefulWidget {
   final VoidCallback func;
@@ -74,15 +74,15 @@ class _MainHomeState extends State<MainHome> {
     }
   }
 
-  processCV() {
+  processCV() async {
     if (kIsWeb) {
-      String url = "https://drive.google.com/file/d/1Zjk_pPbIT7VOtk06xFm6POgsPr2iRMuW/view?usp=sharing";
-      js.context
-          .callMethod('open', [url]);
-      //
-      // html.AnchorElement anchorElement = html.AnchorElement(href: url)
-      //   ..setAttribute("download", "CV.pdf")
-      //   ..click();
+      String url =
+          "https://drive.google.com/file/d/1Zjk_pPbIT7VOtk06xFm6POgsPr2iRMuW/view?usp=sharing";
+      if (!await launch(
+        url,
+      )) {
+        throw 'Could not launch $url';
+      }
     } else {
       result = Provider.of<CVProvider>(context, listen: false).downloadCV();
     }
@@ -94,31 +94,44 @@ class _MainHomeState extends State<MainHome> {
     final width = MediaQuery.of(context).size.width;
     return Container(
       width: width,
-      height: height,
-      padding: Responsive.isLargeScreen(context)
+      height: kIsWeb ? height : height*0.72,
+      padding: !kIsWeb ? const EdgeInsets.only(top: 20,left: 20,right: 20) :Responsive.isLargeScreen(context)
           ? const EdgeInsets.symmetric(horizontal: 100, vertical: 30)
           : Responsive.isMediumScreen(context)
               ? const EdgeInsets.symmetric(horizontal: 70, vertical: 30)
-              : const EdgeInsets.all(30),
+              : const EdgeInsets.all(20),
       decoration: const BoxDecoration(
-          image: DecorationImage(
+          image: kIsWeb?DecorationImage(
               repeat: ImageRepeat.noRepeat,
-              alignment: Alignment.topRight,
+              alignment: Alignment.center,
               fit: BoxFit.contain,
-              image: AssetImage("assets/images/profile.png"))),
+              image: AssetImage("assets/images/profile.png")):null),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ///If both name and button to bounce remove
           ///Sized box and insert mainAxisAlignment in Column
-          SizedBox(
+          kIsWeb?SizedBox(
             height: height * 0.25,
+          ):Container(
+            margin: const EdgeInsets.only(bottom: 30.0),
+            child: Image.asset("assets/images/profile.png",alignment: Alignment.center,),
           ),
           AnimatedTextKit(
             repeatForever: true,
             isRepeatingAnimation: true,
             pause: const Duration(milliseconds: 50),
             animatedTexts: [
+              !kIsWeb?ColorizeAnimatedText(
+                "Hi! I am Nabin Dangol",
+                colors: colorizeColors,
+                textStyle: const TextStyle(
+                    fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic),
+                speed: const Duration(milliseconds: 300),
+              ):
               Responsive.isLargeScreen(context)
                   ? ColorizeAnimatedText(
                       _headerText,
@@ -210,23 +223,17 @@ class _MainHomeState extends State<MainHome> {
     } else {
       return InkWell(
         onTap: processCV,
-        child: AnimatedContainer(
-            duration: const Duration(seconds: 1),
-            curve: Curves.decelerate,
-            margin: EdgeInsets.only(top: topMargin),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 400),
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              curve: Curves.slowMiddle,
-              decoration: BoxDecoration(
-                  color: Colors.red,
-                  border: Border.all(color: Colors.redAccent, width: 3)),
-              child: const FittedBox(
-                fit: BoxFit.cover,
-                child: Text(
-                  "Download CV",
-                  style: TextStyle(color: Colors.white),
-                ),
+        child: Container(
+          margin: const EdgeInsets.only(top: 35),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+            decoration: BoxDecoration(
+                color: Colors.red,
+                border: Border.all(color: Colors.redAccent, width: 3)),
+            child: const FittedBox(
+              fit: BoxFit.cover,
+              child: Text(
+                "Download CV",
+                style: TextStyle(color: Colors.white),
               ),
             )),
       );

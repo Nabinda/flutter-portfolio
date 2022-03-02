@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ///----Main Page------
                     Container(
                       key: const Key("MainPage"),
-                      height: kIsWeb ? height : height * 0.8,
+                      height: kIsWeb ? height : height*0.85,
                       width: width,
                       color: Colors.black,
                       child: Column(
