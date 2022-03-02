@@ -6,6 +6,7 @@ import '/provider/cv_provider.dart';
 import '/responsive.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
+import 'dart:js' as js;
 
 class MainHome extends StatefulWidget {
   final VoidCallback func;
@@ -73,12 +74,17 @@ class _MainHomeState extends State<MainHome> {
     }
   }
 
-  processCV() async {
+  processCV() {
     if (kIsWeb) {
+      String url = "https://drive.google.com/file/d/1Zjk_pPbIT7VOtk06xFm6POgsPr2iRMuW/view?usp=sharing";
+      js.context
+          .callMethod('open', [url]);
+      //
+      // html.AnchorElement anchorElement = html.AnchorElement(href: url)
+      //   ..setAttribute("download", "CV.pdf")
+      //   ..click();
     } else {
-      result =
-          await Provider.of<CVProvider>(context, listen: false).downloadCV();
-      print(result);
+      result = Provider.of<CVProvider>(context, listen: false).downloadCV();
     }
   }
 
