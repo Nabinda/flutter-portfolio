@@ -75,7 +75,6 @@ class _MainHomeState extends State<MainHome> {
   }
 
   processCV() async {
-    if (kIsWeb) {
       String url =
           "https://drive.google.com/file/d/1Zjk_pPbIT7VOtk06xFm6POgsPr2iRMuW/view?usp=sharing";
       if (!await launch(
@@ -83,9 +82,6 @@ class _MainHomeState extends State<MainHome> {
       )) {
         throw 'Could not launch $url';
       }
-    } else {
-      result = Provider.of<CVProvider>(context, listen: false).downloadCV();
-    }
   }
 
   @override
