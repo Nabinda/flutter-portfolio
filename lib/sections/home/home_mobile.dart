@@ -17,8 +17,8 @@ class HomeMobile extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            bottom: 0.0,
-            right: -AppDimensions.normalize(25),
+            right: -AppDimensions.normalize(5),
+            bottom: AppDimensions.normalize(45),
             child: Opacity(
               opacity: 0.9,
               child: Image.asset(
@@ -36,6 +36,7 @@ class HomeMobile extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   mainAxisSize: MainAxisSize.min,

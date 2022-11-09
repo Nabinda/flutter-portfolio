@@ -62,7 +62,6 @@ flutter:
     - assets/services/
     - assets/projects/
 
-    - data.json
 
   fonts:
     - family: Agustina

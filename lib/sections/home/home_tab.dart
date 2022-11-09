@@ -18,8 +18,8 @@ class HomeTab extends StatelessWidget {
       child: Stack(
         children: [
           Positioned(
-            bottom: 0,
-            right: 0,
+            right: -AppDimensions.normalize(5),
+            bottom: AppDimensions.normalize(33),
             child: Opacity(
               opacity: 0.9,
               child: EntranceFader(
