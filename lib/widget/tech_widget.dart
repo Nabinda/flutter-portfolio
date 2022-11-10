@@ -19,7 +19,8 @@ class ToolTechWidget extends StatelessWidget {
         Text(
           " $techName ",
           style: AppText.l1b,
-        )
+        ),
+        
       ],
     );
   }
