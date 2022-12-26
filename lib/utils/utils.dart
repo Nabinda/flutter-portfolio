@@ -45,7 +45,7 @@ class StaticUtils {
   static const String resume =
       'https://drive.google.com/file/d/1FDhZ1IrEp4XtgcjxK3uxcDr20hKN7C5F/view?usp=sharing';
 
-  static const String gitHub = 'https://github.com/Nabinda';
+  static const String gitHub = 'https://www.linkedin.com/in/dangol-nabin/';
 }
 
 class BodyUtils {

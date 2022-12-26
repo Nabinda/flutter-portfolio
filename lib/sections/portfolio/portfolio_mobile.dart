@@ -49,7 +49,7 @@ class PortfolioMobileTab extends StatelessWidget {
           child: OutlinedButton(
             onPressed: () => openURL(StaticUtils.gitHub),
             child: Text(
-              'See More',
+              'Hire Me',
               style: AppText.l1b,
             ),
           ),
