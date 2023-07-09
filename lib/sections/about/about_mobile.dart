@@ -99,28 +99,28 @@ class AboutMobile extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   AboutMeData(
-                    data: "Name",
-                    information: "Nabin Dangol",
+                    data: about[0].title,
+                    information: about[0].label,
                   ),
                   AboutMeData(
-                    data: "Age",
-                    information: "22",
+                    data: about[1].title,
+                    information: about[1].label,
                   ),
                 ],
               ),
               const Spacer(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   AboutMeData(
-                    data: "Email",
-                    information: "nabindangol2@gmail.com",
+                    data: about[2].title,
+                    information: about[2].label,
                   ),
                   AboutMeData(
-                    data: "From",
-                    information: "KTM, Nepal",
+                    data: about[3].title,
+                    information: about[3].label,
                   ),
                 ],
               ),

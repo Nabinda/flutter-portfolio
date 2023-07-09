@@ -11,6 +11,7 @@ final themeLight = ThemeData(
   fontFamily: fontFamily,
   backgroundColor: Colors.white,
   splashColor: Colors.transparent,
+  hoverColor: const Color(0xff3bb2d0).withOpacity(0.5),
   scaffoldBackgroundColor: Colors.white,
   colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(
     secondary: Colors.black,
@@ -28,6 +29,7 @@ final themeDark = ThemeData(
   splashColor: Colors.transparent,
   backgroundColor: Colors.grey[800],
   scaffoldBackgroundColor: Colors.black,
+  hoverColor: const Color(0xff3bb2d0),
   colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(
     secondary: const Color(0xffC0392B),
     brightness: Brightness.dark,

@@ -43,10 +43,17 @@ class StaticUtils {
   ];
 
   static const String resume =
-      'https://drive.google.com/file/d/1FDhZ1IrEp4XtgcjxK3uxcDr20hKN7C5F/view?usp=sharing';
+      'https://drive.google.com/file/d/1YIkmxf-ZOVco-y33_TvIHITF3OlzmdF7/view?usp=sharing';
 
   static const String gitHub = 'https://www.linkedin.com/in/dangol-nabin/';
 }
+
+List<GeneralInfo> about = [
+  GeneralInfo(title: 'Name', label: 'Nabin Dangol'),
+  GeneralInfo(title: 'Email', label: 'nabindangol2@gmail.com'),
+  GeneralInfo(title: 'DOB', label: '22 October, 2000'),
+  GeneralInfo(title: 'From', label: 'Nepal'),
+];
 
 class BodyUtils {
   static const List<Widget> views = [
@@ -57,4 +64,10 @@ class BodyUtils {
     Contact(),
     Footer(),
   ];
+}
+
+class GeneralInfo {
+  final String title;
+  final String label;
+  GeneralInfo({required this.title, required this.label});
 }

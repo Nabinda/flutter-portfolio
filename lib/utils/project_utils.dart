@@ -1,4 +1,4 @@
-class ProjectUtils {
+class  ProjectUtils {
   static const List<String> banners = [
     "assets/projects/boobobutt-banner.jpg",
     "assets/projects/loksewa-banner.png",
