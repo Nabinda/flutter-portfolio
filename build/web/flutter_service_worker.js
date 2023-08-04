@@ -3,14 +3,16 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "4ec71a0b73cabf33c3c8d999ade8022c",
-"assets/AssetManifest.json": "b74fc3f39c6ae317fd8c53ce8e13d36d",
+const RESOURCES = {"assets/AssetManifest.bin": "714c571b4d795df6247f68c33ad86433",
+"assets/AssetManifest.json": "8eb47270c4417a868e3374d0e2bb4dbc",
 "assets/assets/hi.gif": "cad5918d86b6a7e83f1fb4acead70e4c",
 "assets/assets/photos/black-white.png": "9c4f4227a3047c4d0907f404f7192150",
 "assets/assets/photos/colored.png": "639fb35b59518cf0ef2cf7d021a8d0bd",
 "assets/assets/photos/mobile.png": "c9ed3ad4e416fd67e8a802824ec54575",
 "assets/assets/projects/bb.png": "34600fb95fa02b119e10b4b43039e1a9",
 "assets/assets/projects/boobobutt-banner.jpg": "21e0b441b6be74a1ecd35bb2daa768cd",
+"assets/assets/projects/hk-banner.png": "183af564bce5177d5975d6d27e16e9da",
+"assets/assets/projects/hk.png": "296651d2d0dd16df3aa08ea9d15c12c1",
 "assets/assets/projects/loksewa-banner.png": "bc778fc8a532154c22c252d2e8d2bf54",
 "assets/assets/projects/loksewa.png": "21bc6b8725781215d13385fc25e3a788",
 "assets/assets/projects/msn-banner.png": "f4949341ed03aff984badd2bc6a94fc4",
@@ -75,9 +77,9 @@ const RESOURCES = {"assets/AssetManifest.bin": "4ec71a0b73cabf33c3c8d999ade8022c
 "googleb546e7d15d440f54.html": "50413960ecbb31edcaf8bd115ca99947",
 "icons/Icon-192.png": "f90cb2cbabc58db1306f42efd46ef193",
 "icons/Icon-512.png": "3747a1d11651d33ce92a5305cad37a6a",
-"index.html": "aaeae54945ff389f01bb695960d7e0ec",
-"/": "aaeae54945ff389f01bb695960d7e0ec",
-"main.dart.js": "1a54913e6f13ac643d795ae2e64b04eb",
+"index.html": "65d636c352d5e5645fb709dc395b2749",
+"/": "65d636c352d5e5645fb709dc395b2749",
+"main.dart.js": "5108e83c4849d4520047ba8f461993d6",
 "manifest.json": "f085dd5c0af52036e1c101c5c0a49a55",
 "version.json": "a29e8b22a08aa0274b027931eec216c4"};
 // The application shell files that are downloaded before a service worker can
